@@ -599,7 +599,7 @@ Section DoubleMul.
   Lemma spec_w_mul_add : forall x y r,
     let (h,l):= w_mul_add x y r in
     [|h|]*wB+[|l|] = [|x|]*[|y|] + [|r|].
-  Proof.
+  Proof using spec_w_succ spec_w_mul_c spec_w_add_c spec_w_0 spec_to_Z.
    intros x y r;unfold w_mul_add;assert (H:=spec_w_mul_c x y);
    destruct (w_mul_c x y) as [ |h l];simpl;rewrite <- H.
    rewrite spec_w_0;trivial.

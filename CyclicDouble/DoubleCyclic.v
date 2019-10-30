@@ -738,14 +738,14 @@ refine
 
  Let spec_ww_mod :  forall a b, 0 < [|b|] -> [|mod_ a b|] = [|a|] mod [|b|].
  Proof.
-  refine (spec_ww_mod w_digits W0 compare mod_gt w_to_Z _ _ _);wwauto.
+  refine (spec_ww_mod w_digits compare mod_gt w_to_Z _ _ _);wwauto.
  Qed.
 
  Let spec_ww_gcd_gt : forall a b, [|a|] > [|b|] ->
       Zis_gcd [|a|] [|b|] [|gcd_gt a b|].
  Proof.
-  refine (@spec_ww_gcd_gt t w_digits W0 w_to_Z _
-    w_0 w_0 w_eq0 w_gcd_gt _ww_digits
+  refine (@spec_ww_gcd_gt t w_digits w_to_Z _
+    w_0 w_eq0 w_gcd_gt _ww_digits
   _ gcd_gt_fix _ _ _ _ gcd_cont _);wwauto.
   refine (@spec_ww_gcd_gt_aux t w_digits w_0 w_WW w_0W w_compare w_opp_c w_opp
    w_opp_carry w_sub_c w_sub w_sub_carry w_gcd_gt w_add_mul_div w_head0
@@ -754,13 +754,13 @@ refine
   exact ZnZ.spec_div21.
   exact ZnZ.spec_zdigits.
   exact spec_ww_add_mul_div.
-  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_0 w_1 w_compare
-   _ _);wwauto.
+  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_1 w_compare
+   _ _ _);wwauto.
  Qed.
 
  Let spec_ww_gcd : forall a b, Zis_gcd [|a|] [|b|] [|gcd a b|].
  Proof.
-  refine (@spec_ww_gcd t w_digits W0 compare w_to_Z _ _ w_0 w_0 w_eq0 w_gcd_gt
+  refine (@spec_ww_gcd t w_digits compare w_to_Z _ _ w_0 w_eq0 w_gcd_gt
   _ww_digits _ gcd_gt_fix _ _ _ _ gcd_cont _);wwauto.
   refine (@spec_ww_gcd_gt_aux t w_digits w_0 w_WW w_0W w_compare w_opp_c w_opp
    w_opp_carry w_sub_c w_sub w_sub_carry w_gcd_gt w_add_mul_div w_head0
@@ -769,8 +769,8 @@ refine
   exact ZnZ.spec_div21.
   exact ZnZ.spec_zdigits.
   exact spec_ww_add_mul_div.
-  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_0 w_1 w_compare
-   _ _);wwauto.
+  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_1 w_compare
+   _ _ _);wwauto.
  Qed.
 
  Let spec_ww_is_even : forall x,
@@ -792,7 +792,6 @@ refine
  intros x y H.
  refine (@spec_ww_sqrt2 t w_is_even w_compare w_0 w_1 w_Bm1
                w_0W w_sub w_square_c w_div21 w_add_mul_div w_digits w_zdigits
-               _ww_zdigits
                w_add_c w_sqrt2 w_pred pred_c pred add_c add sub_c add_mul_div
                 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _); wwauto.
  exact ZnZ.spec_zdigits.
@@ -806,7 +805,7 @@ refine
  Let spec_ww_sqrt : forall x,
        [|sqrt x|] ^ 2 <= [|x|] < ([|sqrt x|] + 1) ^ 2.
  Proof.
- refine (@spec_ww_sqrt t w_is_even w_0 w_1 w_Bm1
+ refine (@spec_ww_sqrt t w_is_even w_0
            w_sub w_add_mul_div w_digits w_zdigits _ww_zdigits
                w_sqrt2 pred add_mul_div head0 compare
             _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _); wwauto.
@@ -940,7 +939,7 @@ Section MulAdd.
   [||WW zh zl||] = [|x|] * [|y|] + [|z|].
   Proof.
   intros x y z.
-   refine (spec_w_mul_add _ _ _ _ _ _ _ _ _ _ _ _ x y z); auto.
+   refine (spec_w_mul_add _ _ _ _ _ _ _ _ _ _ _ x y z); auto.
   exact ZnZ.spec_0.
   exact ZnZ.spec_to_Z.
   exact ZnZ.spec_succ.

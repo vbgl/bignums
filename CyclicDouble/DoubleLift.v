@@ -161,7 +161,8 @@ Section DoubleLift.
 
   Lemma spec_ww_head0  : forall x,  0 < [[x]] ->
 	 wwB/ 2 <= 2 ^ [[ww_head0 x]] * [[x]] < wwB.
-  Proof.
+  Proof using spec_compare spec_to_Z spec_w_0 spec_w_0W spec_w_add
+        spec_w_head0 spec_zdigits.
    clear spec_ww_zdigits.
    rewrite wwB_div_2;rewrite Z.mul_comm;rewrite wwB_wBwB.
    assert (U:= lt_0_wB w_digits); destruct x as [ |xh xl];simpl ww_to_Z;intros H.
@@ -233,7 +234,7 @@ Section DoubleLift.
 
   Lemma spec_ww_tail0  : forall x,  0 < [[x]] ->
 	 exists y, 0 <= y /\ [[x]] = (2 * y + 1) * 2 ^ [[ww_tail0 x]].
-  Proof.
+  Proof using spec_compare spec_to_Z spec_w_0 spec_w_0W spec_w_add spec_w_tail0 spec_zdigits.
    clear spec_ww_zdigits.
    destruct x as [ |xh xl];simpl ww_to_Z;intros H.
    unfold Z.lt in H;discriminate H.
@@ -300,7 +301,7 @@ Section DoubleLift.
       ([[WW xh xl]] * (2^[[p]]) +
        [[WW yh yl]] / (2^(Zpos (xO w_digits) - [[p]]))) mod wwB.
   Proof.
-   clear spec_ww_zdigits.
+   clear spec_ww_zdigits ww_Digits spec_ww_digits.
    intros xh xl yh yl p zdigits;assert (HwwB := wwB_pos w_digits).
    case (spec_to_w_Z p); intros Hv1 Hv2.
    replace (Zpos (xO w_digits)) with (Zpos w_digits + Zpos w_digits).
@@ -424,7 +425,7 @@ Section DoubleLift.
          ([[x]] * (2^[[p]]) +
           [[y]] / (2^(Zpos (xO w_digits) - [[p]]))) mod wwB.
   Proof.
-   clear spec_ww_zdigits.
+   clear spec_ww_zdigits ww_Digits spec_ww_digits.
    intros x y p H.
    destruct x as [ |xh xl];
    [assert (H1 := @spec_ww_add_mul_div_aux w_0 w_0)
